@@ -1,10 +1,11 @@
-# Assignment 1 Template
+# Assignment 1 
 
-Template repository for use in Assignment 1.
+Shyam Kamalesh Borkar's repository for use in Assignment 1.
 
 ## Members
 
-* John Smith jsmi0000@student.monash.edu
+* Shyam Kamalesh Borkar sbor0018@student.monash.edu
+* Student ID: 32901459
 
 ## TODO
 
