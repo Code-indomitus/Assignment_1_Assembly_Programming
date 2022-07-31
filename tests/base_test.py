@@ -41,6 +41,7 @@ class BaseTest(unittest.TestCase):
 
     def _callTestMethod(self, method):
         try:
+            self.maxDiff = None
             method()
         except AssertionError as e:
             raise e
