@@ -1,17 +1,18 @@
     .data
 
 # Pricing data
-tier_one_price: .word 9
-tier_two_price: .word 11
-tier_three_price: .word 14
-discount_flag: .word 0
+tier_one_price:    .word 9
+tier_two_price:    .word 11
+tier_three_price:  .word 14
+discount_flag:     .word 0
 
 # Fixed Messages.
-welcome_message: .asciiz "Welcome to the Thor Electrical Company!\n"
-prompt_age: .asciiz "Enter your age: "
+welcome_message:    .asciiz "Welcome to the Thor Electrical Company!\n"
+prompt_age:         .asciiz "Enter your age: "
 prompt_consumption: .asciiz "Enter your total consumption in kWh: "
 final_bill_message: .asciiz "Mr Loki Laufeyson, your electricity bill is $"
-full_stop: .byte '.'
+full_stop:          .asciiz "."
+new_line:           .asciiz "\n"
 
     .text
 # Print the Welcome Message.
@@ -171,9 +172,9 @@ add $a0, $0, $s2 # print total_bill % 100
 syscall
 
 addi, $v0, $0, 4
-la $a0, new_line # print new line.
+la $a0, new_line # print new line character.
 syscall
 
 End:
-addi, $v0, $0, 10
+addi, $v0, $0, 10 # End the program
 syscall
