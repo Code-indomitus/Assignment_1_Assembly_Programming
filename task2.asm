@@ -1,13 +1,11 @@
-# Your job to fill in! :)
-
     .data
     
 height:         .word 0
 space:          .asciiz " "
 valid_input:    .word 0
-i_counter:              .word 0
-s_counter:              .word 0
-j_counter:              .word 0
+i_counter:      .word 0
+s_counter:      .word 0
+j_counter:      .word 0
 height_prompt:  .asciiz "How tall do you want the tower: "
 asterisk:       .asciiz "* "
 alphabet_A:     .asciiz "A "
