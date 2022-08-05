@@ -111,6 +111,7 @@ syscall
 lw $t0, -4($fp) # load smash_count
 addi $t0, $t0, 1 # increment smash_count
 sw $t0, -4($fp) # update smash_count in the stack
+j end_if
 
 else:
 addi $v0, $0, 4
@@ -121,7 +122,6 @@ end_if:
 lw $t0, -8($fp)# load i from stack
 addi $t0, $t0, 1 # increment i counter
 sw $t0, -8($fp) # update i counter in the stack
-
 j for
 
 end_for:
