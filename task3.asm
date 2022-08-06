@@ -7,7 +7,6 @@ main_message2:  .asciiz " people\n"
     .text
 # call main
 jal main
-addi $sp, $sp, 8 # restore stack pointer to original
 # End the program.
 addi $v0, $0, 10
 syscall
@@ -61,6 +60,7 @@ addi $sp, $sp, 8 # clear local variables off the stack
 
 lw $fp, 0($sp) # restore $fp
 lw $ra, 4($sp) # restore $ra
+addi $sp, $sp, 8 # restore stack pointer to original
 
 addi $t0, $v0, 0 #save return value in $t0
 
@@ -103,7 +103,7 @@ lw $t0, -8($fp)# load i from stack
 lw $t1, 12($fp) # load address of the_list
 lw $t1, 0($t1)# load len of the_list (first element of array)
 slt $t0, $t0, $t1 # i < len(the_list)?
-beq $t0, $0, end_for
+beq $t0, $0, end_for # end for loop if not true
 
 if:
 lw $t0, -8($fp)# load i from stack
