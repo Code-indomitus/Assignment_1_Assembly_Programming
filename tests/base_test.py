@@ -41,7 +41,6 @@ class BaseTest(unittest.TestCase):
 
     def _callTestMethod(self, method):
         try:
-            self.maxDiff = None
             method()
         except AssertionError as e:
             raise e
@@ -57,7 +56,7 @@ class BaseTest(unittest.TestCase):
         with open(os.path.join(TEST_DIR, fileOut), "r") as f:
             content = f.read()
         
-        self.assertEqual(res, content)
+        self.assertEqual(res.replace("\r", ""), content.replace("\r", ""))
 
     def mars_test_function_in_out(self, filename_tester, filename, fileIn, fileOut):
         child = subprocess.run(["java", "-jar", self.MARS_filepath, os.path.join(TEST_DIR, filename_tester), os.path.join(SOURCE_DIR, filename)], stdin=open(os.path.join(TEST_DIR, fileIn), "r"), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -67,4 +66,4 @@ class BaseTest(unittest.TestCase):
         with open(os.path.join(TEST_DIR, fileOut), "r") as f:
             content = f.read()
         
-        self.assertEqual(res, content)
+        self.assertEqual(res.replace("\r", ""), content.replace("\r", ""))
