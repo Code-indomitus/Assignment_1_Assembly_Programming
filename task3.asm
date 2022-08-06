@@ -1,13 +1,14 @@
     .data
 my_list:        .word 0
-hulk_smash:     .asciiz "Hulk SMASH! >:("
-hulk_sad:       .asciiz "Hulk Sad :(" 
+hulk_smash:     .asciiz "Hulk SMASH! >:(\n"
+hulk_sad:       .asciiz "Hulk Sad :(\n" 
 main_message1:  .asciiz "Hulk smashed "
-main_message2:  .asciiz " people"
+main_message2:  .asciiz " people\n"
 
     .text
 # call main
 jal main
+addi $sp, $sp, 8 # restore stack pointer to original
 # End the program.
 addi $v0, $0, 10
 syscall
@@ -48,26 +49,40 @@ sw $t1, 12($t0) # my_list[2] = 16
 addi $t0, $0, 15
 sw $t0, -8($fp)
 
-# print main_message1
-addi $v0, $0, 4
-la $a0, main_message1
-syscall
 # allocate space for 2 arguments
 addi $sp, $sp, -8
 # pushing arguments onto stack
 lw $t0, -4($fp) # push my_list argument
-sw $t0, 0($sp)
-lw $t0, -8($fp) # push hulk_power argument
 sw $t0, 4($sp)
+lw $t0, -8($fp) # push hulk_power argument
+sw $t0, 0($sp)
+
 # call smash_or_sad 
 jal smash_or_sad
+addi $sp, $sp, 8 # clear arguments off the stack
+addi $sp, $sp, 8 # clear local variables off the stack
+
+lw $fp, 0($sp) # restore $fp
+lw $ra, 4($sp) # restore $ra
+
+addi $t0, $v0, 0 #save return value in $t0
+
+# print main_message1
+addi $v0, $0, 4
+la $a0, main_message1
+syscall
+
 # print smash count
 addi $v0, $0, 1
-addi $a0, $v0, 0
+addi $a0, $t0, 0
+syscall
+
 # print main_message2
 addi $v0, $0, 4
 la $a0, main_message2
 syscall
+
+jr $ra
 
 smash_or_sad:
 # space for $ra and $fp on stack.
@@ -89,7 +104,7 @@ sw $t0, -8($fp)
 for: 
 lw $t0, -8($fp)# load i from stack
 lw $t1, 12($fp) # load address of the_list
-lw $t1, ($t1)# load len of the_list (first element of array)
+lw $t1, 0($t1)# load len of the_list (first element of array)
 slt $t0, $t0, $t1 # i < len(the_list)?
 beq $t0, $0, end_for
 
@@ -127,5 +142,8 @@ j for
 end_for:
 # Return smash_count. Set $v0 to return value.
 lw $v0, -4($fp)
-
-
+addi $sp, $sp, 8 # clear local variables off the stack
+lw $fp, 0($sp) # restore $fp
+lw $ra, 4($sp) # restore $ra
+addi $sp, $sp, 8 # clear $fp and $ra off the stack
+jr $ra
