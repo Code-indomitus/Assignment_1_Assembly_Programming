@@ -3,9 +3,9 @@
 height:         .word 0
 space:          .asciiz " "
 valid_input:    .word 0
-i_counter:      .word 0
-s_counter:      .word 0
-j_counter:      .word 0
+i:      .word 0
+s:      .word 0
+j:      .word 0
 height_prompt:  .asciiz "How tall do you want the tower: "
 asterisk:       .asciiz "* "
 alphabet_A:     .asciiz "A "
@@ -42,7 +42,7 @@ sw $t1, valid_input
 j while
 
 outer_for:
-lw $s0, i_counter # the counter i loaded in $s0.
+lw $s0, i # the counter i loaded in $s0.
 lw $t0, height # Height loaded into $t0.
 beq $s0, $t0, End # End outer for loop if i is equal to height. End the program if true.
 
@@ -52,20 +52,20 @@ addi $s0, $t0, 1 # the counter s stored in $s1. (height+1)
 addi $s1, $0, -1 # Load -1 into $s1
 mult $s1, $s0 # Doing this operation: (height+1)*-1
 mflo $s2 # $s2 = (height+1)*-1
-sw $s2, s_counter # save (height+1)*-1 in s_counter.
+sw $s2, s # save (height+1)*-1 in s.
 
 # Initialise j counter to 0.
 addi $s0, $0, 0
-sw $s0, j_counter
+sw $s0, j
 
 inner_for1:
 
 addi $s0, $0, -1
-lw $s1, i_counter # load current i value into $s0.
+lw $s1, i # load current i value into $s0.
 mult $s0, $s1
 mflo $s2 # $s2 = -i
 
-lw $s3, s_counter # load current s value into $s3.
+lw $s3, s # load current s value into $s3.
 beq $s3, $s2, inner_for2
 
 # Print SPACE
@@ -74,21 +74,21 @@ la $a0, space # Print SPACE.
 syscall
 
 # Increment counter s. 
-lw $s0, s_counter # load current s value into $s0.
+lw $s0, s # load current s value into $s0.
 addi $s0, $s0, 1 #(s = s + 1)
-sw $s0, s_counter # save new s counter value.
+sw $s0, s # save new s counter value.
 j inner_for1
 
 inner_for2:
-lw $s0, j_counter # The counter j stored in $s0.
-lw $s1, i_counter # load current i value into $s1.
+lw $s0, j # The counter j stored in $s0.
+lw $s1, i # load current i value into $s1.
 addi $s2, $s1, 1
 
 beq $s0, $s2, end_inner_for2
 
 # IF-ELSE-PRINT
 if2:
-lw $s0, i_counter # load current i value into $s1.
+lw $s0, i # load current i value into $s1.
 bne $s0, $0, else2
 if2_then:
 addi, $v0, $0, 4
@@ -103,9 +103,9 @@ la $a0, asterisk # Print *.
 syscall
 
 end_if2:
-lw $s0, j_counter
+lw $s0, j
 addi $s0, $s0, 1 # Increment counter j. (j = j + 1)
-sw $s0, j_counter
+sw $s0, j
 j inner_for2
 
 end_inner_for2:
@@ -114,9 +114,9 @@ addi, $v0, $0, 4
 la $a0, next_line # Print \n .
 syscall
 
-lw $s0, i_counter # load i value.
+lw $s0, i # load i value.
 addi $s0, $s0, 1 # Increment counter i. (i = i +  1)
-sw $s0, i_counter # save incremented i value.
+sw $s0, i # save incremented i value.
 j outer_for
 
 End:
