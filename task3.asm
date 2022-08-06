@@ -1,5 +1,4 @@
     .data
-my_list:        .word 0
 hulk_smash:     .asciiz "Hulk SMASH! >:(\n"
 hulk_sad:       .asciiz "Hulk Sad :(\n" 
 main_message1:  .asciiz "Hulk smashed "
