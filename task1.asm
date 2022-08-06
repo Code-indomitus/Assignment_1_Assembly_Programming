@@ -207,9 +207,7 @@ addi $v0, $0, 1
 add $a0, $0, $t0 # print total_bill % 100 
 syscall
 
-addi, $v0, $0, 4
-la $a0, new_line # print new line.
-syscall
+
 
 End:
 addi, $v0, $0, 10 # End the program
