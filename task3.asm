@@ -14,8 +14,6 @@ addi $v0, $0, 10
 syscall
 
 main:
-# copy $sp into $fp.
-addi $fp, $sp, 0
 # space for $ra and $fp on stack.
 addi $sp, $sp, -8
 # save $ra onto stack.
