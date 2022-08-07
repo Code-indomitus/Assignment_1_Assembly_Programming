@@ -27,7 +27,7 @@ addi $sp, $sp, -8
 addi $v0, $0, 9
 addi $a0, $0, 16 # (3 + 1) * 4 bytes must be reserved.
 syscall
-addi $t0, $v0, 0
+addi $t0, $v0, 0 # copy address of arr to $t0
 # push address of array to stack
 sw $t0, -4($fp)
 
@@ -144,3 +144,5 @@ lw $fp, 0($sp) # restore $fp
 lw $ra, 4($sp) # restore $ra
 addi $sp, $sp, 8 # clear $fp and $ra off the stack
 jr $ra
+
+
