@@ -107,7 +107,7 @@ beq $t0, $0, end_for # end for loop if not true
 
 if:
 lw $t0, -8($fp)# load i from stack
-addi $t0, $0, 1 # add 1 to consider first element being size.
+addi $t0, $t0, 1 # add 1 to consider first element being size.
 sll $t0, $t0, 2 # multiply by 4
 lw $t1, 12($fp) # load address of the_list
 add $t1, $t0, $t1 # address of the_list[i]
