@@ -50,9 +50,9 @@ main:
             addi $sp, $sp, -8
             # pushing arguments onto stack
             lw $t0, -4($fp) # push my_list argument
-            sw $t0, 4($sp)
-            lw $t0, -8($fp) # push hulk_power argument
             sw $t0, 0($sp)
+            lw $t0, -8($fp) # push hulk_power argument
+            sw $t0, 4($sp)
 
             # call smash_or_sad 
             jal smash_or_sad
@@ -101,7 +101,7 @@ smash_or_sad:
 
 for: 
             lw $t0, -8($fp)# load i from stack
-            lw $t1, 12($fp) # load address of the_list
+            lw $t1, 8($fp) # load address of the_list
             lw $t1, 0($t1)# load len of the_list (first element of array)
             slt $t0, $t0, $t1 # i < len(the_list)?
             beq $t0, $0, end_for # end for loop if not true
@@ -110,10 +110,10 @@ if:
             lw $t0, -8($fp)# load i from stack
             addi $t0, $t0, 1 # add 1 to consider first element being size.
             sll $t0, $t0, 2 # multiply by 4
-            lw $t1, 12($fp) # load address of the_list
+            lw $t1, 8($fp) # load address of the_list
             add $t1, $t0, $t1 # address of the_list[i]
             lw $t0, ($t1) # the_list[i]
-            lw $t1, 8($fp) # load hulk_power
+            lw $t1, 12($fp) # load hulk_power
             slt $t0, $t1, $t0 # not(hulk_power < the_list[i])
             bne $t0, $0, else
 
