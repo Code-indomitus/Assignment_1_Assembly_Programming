@@ -59,10 +59,10 @@ main:
             # allocate space for 3 arguments
             addi $sp, $sp, -12
             lw $t0,-4 ($fp) # load local arr
-            sw $t0, 8($sp) # store argument arr
+            sw $t0, 0($sp) # store argument arr
 
             lw $t0, -8($fp) # load local r
-            sw $t0, 0($sp) # store argument r
+            sw $t0, 8($sp) # store argument r
 
             lw $t0, -12($fp) # load local n
             sw $t0, 4($sp) # store argument n
@@ -92,7 +92,7 @@ print_combination:
             addi $sp, $sp, -4
 
             # allocate space for data using r
-            lw $t0, 8($fp)
+            lw $t0, 16($fp) # load r
             addi $t0, $t0, 1 # extra size for first element which is the size of data
             sll $t0, $t0, 2 # multiply by 4
             addi $a0, $t0, 0
@@ -100,7 +100,7 @@ print_combination:
             syscall
 
             sw $v0, -4($fp) # save address of data to stack
-            lw $t0, 8($fp) # load r from stack
+            lw $t0, 16($fp) # load r from stack
             lw $t1, -4($fp) # load address of data
             sw $t0, ($t1) # store length r of data
 
@@ -109,7 +109,7 @@ print_combination:
             sw $0, ($sp) # initialise counter to zero
             for_initialize:
             lw $t0, ($sp) # load temp counter
-            lw $t1, 8($fp)# load r from stack
+            lw $t1, 16($fp)# load r from stack
             slt $t0, $t0, $t1 # temp counter < r ?
             beq $t0, $0, end_for_initialize
 
@@ -134,21 +134,21 @@ end_for_initialize:
             # allocate space for 6 arguments
             addi $sp, $sp, -24
 
-            lw $t0, 16($fp) #argument arr
-            sw $t0, 20($sp)
+            lw $t0, 8($fp) #argument arr
+            sw $t0, 0($sp)
 
             lw $t0, 12($fp) #argument n
-            sw $t0, 16($sp)
-
-            lw $t0, 8($fp) #argument r
-            sw $t0, 12($sp)
-
-            sw $0, 8($sp) #argument index
-
-            lw $t0, -4($fp) #argument data (address)
             sw $t0, 4($sp)
 
-            sw $0, 0($sp) #argument i
+            lw $t0, 16($fp) #argument r
+            sw $t0,8($sp)
+
+            sw $0, 12($sp) #argument index
+
+            lw $t0, -4($fp) #argument data (address)
+            sw $t0, 16($sp)
+
+            sw $0, 20($sp) #argument i
 
             jal combination_aux 
 
@@ -174,13 +174,13 @@ combination_aux:
             sw $0, 0($sp) # initialise j to 0
 
 if1:
-            lw $t0, 16($fp) # load index into $t0
-            lw $t1, 20($fp) # load r into $t1
+            lw $t0, 20($fp) # load index into $t0
+            lw $t1, 16($fp) # load r into $t1
             bne $t0, $t1, if2
 
 for:
             lw $t0, -4($fp) # load j from stack
-            lw $t1, 20($fp) # load r from stack
+            lw $t1, 16($fp) # load r from stack
             slt $t0, $t0, $t1 # j < r?
             beq $t0, $0, end_for
 
@@ -189,7 +189,7 @@ for:
             lw $t0, -4($fp)# load j from stack
             addi $t0, $t0, 1 # add 1 to consider first element being size.
             sll $t0, $t0, 2 # multiply by 4
-            lw $t1, 12($fp) # load address of data
+            lw $t1, 24($fp) # load address of data
             add $t1, $t0, $t1 # address of data[j]
             lw $t0, ($t1) # data[j]
 
@@ -221,8 +221,8 @@ end_for:
             jr $ra
 
 if2:
-            lw $t0, 8($fp) # load i into $t0
-            lw $t1, 24($fp) # load n into $t1
+            lw $t0, 28($fp) # load i into $t0
+            lw $t1, 12($fp) # load n into $t1
             slt $t0, $t0, $t1 # i < n?
             bne $t0, $0 end_if2
 
@@ -236,16 +236,16 @@ if2:
 end_if2:
 
             # data[index] = arr[i]
-            lw $t0, 16($fp)# load index from stack
+            lw $t0, 20($fp)# load index from stack
             addi $t0, $t0, 1 # add 1 to consider first element being size.
             sll $t0, $t0, 2 # multiply by 4
-            lw $t1, 12($fp) # load address of data
+            lw $t1, 24($fp) # load address of data
             add $t0, $t0, $t1 # address of data[index] in $t0
 
-            lw $t1, 8($fp)# load i from stack
+            lw $t1, 28($fp)# load i from stack
             addi $t1, $t1, 1 # add 1 to consider first element being size.
             sll $t1, $t1, 2 # multiply by 4
-            lw $t2, 28($fp) # load address of arr
+            lw $t2, 8($fp) # load address of arr
             add $t2, $t1, $t2 # address of arr[i] in $t1
             lw $t1, ($t2) # arr[i]
 
@@ -256,25 +256,25 @@ end_if2:
             # allocate space for 6 arguments
             addi $sp, $sp, -24
 
-            lw $t0, 28($fp) #argument arr
-            sw $t0, 20($sp)
+            lw $t0, 8($fp) #argument arr
+            sw $t0, 0($sp)
 
-            lw $t0, 24($fp) #argument n
-            sw $t0, 16($sp)
-
-            lw $t0, 20($fp) #argument r
-            sw $t0, 12($sp)
-
-            lw $t0, 16($fp) #argument index -> index + 1
-            addi $t0, $t0, 1
-            sw $t0, 8($sp) 
-
-            lw $t0, 12($fp) #argument data (address)
+            lw $t0, 12($fp) #argument n
             sw $t0, 4($sp)
 
-            lw $t0, 8($fp)
+            lw $t0, 16($fp) #argument r
+            sw $t0, 8($sp)
+
+            lw $t0, 20($fp) #argument index -> index + 1
             addi $t0, $t0, 1
-            sw $t0, 0($sp) #argument i -> i + 1
+            sw $t0, 12($sp) 
+
+            lw $t0, 24($fp) #argument data (address)
+            sw $t0, 16($sp)
+
+            lw $t0, 28($fp)
+            addi $t0, $t0, 1
+            sw $t0, 20($sp) #argument i -> i + 1
 
             jal combination_aux 
 
@@ -285,24 +285,24 @@ end_if2:
             # allocate space for 6 arguments
             addi $sp, $sp, -24
 
-            lw $t0, 28($fp) #argument arr
-            sw $t0, 20($sp)
+            lw $t0, 8($fp) #argument arr
+            sw $t0, 0($sp)
 
-            lw $t0, 24($fp) #argument n
-            sw $t0, 16($sp)
-
-            lw $t0, 20($fp) #argument r
-            sw $t0, 12($sp)
-
-            lw $t0, 16($fp) #argument index
-            sw $t0, 8($sp) 
-
-            lw $t0, 12($fp) #argument data (address)
+            lw $t0, 12($fp) #argument n
             sw $t0, 4($sp)
 
-            lw $t0, 8($fp)
+            lw $t0, 16($fp) #argument r
+            sw $t0, 8($sp)
+
+            lw $t0, 20($fp) #argument index
+            sw $t0, 12($sp) 
+
+            lw $t0, 24($fp) #argument data (address)
+            sw $t0, 16($sp)
+
+            lw $t0, 28($fp)
             addi $t0, $t0, 1
-            sw $t0, 0($sp) #argument i -> i + 1
+            sw $t0, 20($sp) #argument i -> i + 1
                                 
             jal combination_aux 
 
