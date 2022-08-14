@@ -10,73 +10,6 @@ new_line:    .asciiz "\n"
             addi $v0, $0, 10
             syscall
 
-main:
-            # space for $ra and $fp on stack.
-            addi $sp, $sp, -8
-            # save $ra onto stack.
-            sw $ra, 4($sp)
-            # save $fp onto stack.
-            sw $fp, 0($sp)
-            # copy $sp into $fp.
-            addi $fp, $sp, 0
-            # allocate space for 3 local variables.
-            addi $sp, $sp, -12
-
-            # allocate space for arr.
-            addi $v0, $0, 9
-            addi $a0, $0, 24 # (5 + 1) * 4 bytes must be reserved.
-            syscall
-            addi $t0, $v0, 0 # copy address of arr to $t0
-            # push address of array arr to stack
-            sw $t0, -4($fp)
-
-            lw $t0, -4($fp) # load address of array
-            addi $t1, $0, 5 # Assign start of array to size of array.
-            sw $t1, ($t0) # total length of array = 5 + 1
-            # Fill in the elements into the array
-            lw $t0, -4($fp) # load address of array
-            addi $t1, $0, 1
-            sw $t1, 4($t0) # arr[0] = 1
-            addi $t1, $0, 2
-            sw $t1, 8($t0) # arr[1] = 2
-            addi $t1, $0, 3
-            sw $t1, 12($t0) # arr[2] = 3
-            addi $t1, $0, 4
-            sw $t1, 16($t0) # arr[3] = 4
-            addi $t1, $0, 5
-            sw $t1, 20($t0) # arr[4] = 5
-
-            # push r onto the stack
-            addi $t0, $0, 3
-            sw $t0, -8($fp)
-
-            # push n = len(arr) onto the stack
-            lw $t0, -4($fp) # load address of array arr
-            lw $t0, ($t0) # Load length of array arr
-            sw $t0, -12($fp) # n = len(arr)
-
-            # push the 3 arguments of print_combination
-            # allocate space for 3 arguments
-            addi $sp, $sp, -12
-            lw $t0,-4 ($fp) # load local arr
-            sw $t0, 0($sp) # store argument arr
-
-            lw $t0, -8($fp) # load local r
-            sw $t0, 8($sp) # store argument r
-
-            lw $t0, -12($fp) # load local n
-            sw $t0, 4($sp) # store argument n
-
-            jal print_combination
-
-            addi $sp, $sp, 12 # clear 3 arguments off the stack
-            addi $sp, $sp, 12 # clear 3 local variables off the stack
-            lw $fp, 0($sp) # restore $fp
-            lw $ra, 4($sp) # restore $ra
-            addi $sp, $sp, 8 # clear $fp and $ra off the stack
-            jr $ra
-
-
 print_combination:
 
             # space for $ra and $fp on stack.
@@ -313,6 +246,71 @@ end_if2:
             addi $sp, $sp, 8 # clear $fp and $ra off the stack
             jr $ra
 
+main:
+            # space for $ra and $fp on stack.
+            addi $sp, $sp, -8
+            # save $ra onto stack.
+            sw $ra, 4($sp)
+            # save $fp onto stack.
+            sw $fp, 0($sp)
+            # copy $sp into $fp.
+            addi $fp, $sp, 0
+            # allocate space for 3 local variables.
+            addi $sp, $sp, -12
+
+            # allocate space for arr.
+            addi $v0, $0, 9
+            addi $a0, $0, 24 # (5 + 1) * 4 bytes must be reserved.
+            syscall
+            addi $t0, $v0, 0 # copy address of arr to $t0
+            # push address of array arr to stack
+            sw $t0, -4($fp)
+
+            lw $t0, -4($fp) # load address of array
+            addi $t1, $0, 5 # Assign start of array to size of array.
+            sw $t1, ($t0) # total length of array = 5 + 1
+            # Fill in the elements into the array
+            lw $t0, -4($fp) # load address of array
+            addi $t1, $0, 1
+            sw $t1, 4($t0) # arr[0] = 1
+            addi $t1, $0, 2
+            sw $t1, 8($t0) # arr[1] = 2
+            addi $t1, $0, 3
+            sw $t1, 12($t0) # arr[2] = 3
+            addi $t1, $0, 4
+            sw $t1, 16($t0) # arr[3] = 4
+            addi $t1, $0, 5
+            sw $t1, 20($t0) # arr[4] = 5
+
+            # push r onto the stack
+            addi $t0, $0, 3
+            sw $t0, -8($fp)
+
+            # push n = len(arr) onto the stack
+            lw $t0, -4($fp) # load address of array arr
+            lw $t0, ($t0) # Load length of array arr
+            sw $t0, -12($fp) # n = len(arr)
+
+            # push the 3 arguments of print_combination
+            # allocate space for 3 arguments
+            addi $sp, $sp, -12
+            lw $t0,-4 ($fp) # load local arr
+            sw $t0, 0($sp) # store argument arr
+
+            lw $t0, -8($fp) # load local r
+            sw $t0, 8($sp) # store argument r
+
+            lw $t0, -12($fp) # load local n
+            sw $t0, 4($sp) # store argument n
+
+            jal print_combination
+
+            addi $sp, $sp, 12 # clear 3 arguments off the stack
+            addi $sp, $sp, 12 # clear 3 local variables off the stack
+            lw $fp, 0($sp) # restore $fp
+            lw $ra, 4($sp) # restore $ra
+            addi $sp, $sp, 8 # clear $fp and $ra off the stack
+            jr $ra
 
 
 
