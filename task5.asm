@@ -4,6 +4,9 @@ space:       .asciiz " "
 new_line:    .asciiz "\n"
 
     .text
+
+            .globl print_combination
+            .globl combination_aux
     
             jal main
             # End the program.
