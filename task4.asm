@@ -5,6 +5,8 @@ new_line:    .asciiz "\n"
 
     .text
     
+            .globl insertion_sort 
+
             # call main
             jal main
             # End the program.
