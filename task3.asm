@@ -6,6 +6,8 @@ main_message2:  .asciiz " people\n"
 
     .text
 
+            .globl smash_or_sad
+
             # call main
             jal main
             # End the program.
