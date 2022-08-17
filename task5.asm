@@ -43,7 +43,8 @@ print_combination:
             # store temporary counter onto stack
             addi $sp, $sp, -4
             sw $0, ($sp) # initialise counter to zero
-            for_initialize:
+
+for_initialize:
             lw $t0, ($sp) # load temp counter
             lw $t1, 16($fp)# load r from stack
             slt $t0, $t0, $t1 # temp counter < r ?
