@@ -43,24 +43,24 @@ sw $v0, age
 if1:
 lw $t0, age
 addi $t1, $0, 18
-slt $t1, $t1, $t0
-bne $t1, $0, OR
+slt $t1, $t1, $t0   # Check if age lesser than or equal to 18
+bne $t1, $0, OR     # jump to OR if condition not true
 j then1
 
 OR:
 lw $t0, age
 addi $t1, $0, 65
-slt $t1, $t0, $t1
-bne $t1, $0, else1
+slt $t1, $t0, $t1  # check if age greater than or equal to 65
+bne $t1, $0, else1 # jump to else1 if condition not true
 
 then1:
 addi $t0, $0, 1
-sw $t0, discount_flag
+sw $t0, discount_flag  # discount_flag = 1
 j consumptionSection
 
 else1:
-sw $0, discount_flag
-
+sw $0, discount_flag  # discount_flag = 0
+ 
 consumptionSection:
 # Prompt the user to enter consumption.
 addi, $v0, $0, 4
@@ -85,8 +85,8 @@ j elif2
 
 AND:
 lw $t0, discount_flag
-beq $t0, $0, if2_then
-j elif2
+beq $t0, $0, if2_then  # if true jump to if2_then
+j elif2 # if not true go to elif statement
 
 if2_then:
 addi $t0, $0, 1000 
