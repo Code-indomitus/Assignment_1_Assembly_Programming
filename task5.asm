@@ -189,7 +189,7 @@ end_if2:
             # save contents of arr[i] into data[index]
             sw $t1, ($t0)
 
-            # combination_aux(arr, n, r, index, data, i + 1)
+            # combination_aux(arr, n, r, index + 1, data, i + 1)
             # allocate space for 6 arguments
             addi $sp, $sp, -24
 
