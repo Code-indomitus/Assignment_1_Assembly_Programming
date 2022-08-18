@@ -1,3 +1,12 @@
+#   Auuthor: Shyam Kamalesh Borkar
+#   Date: 31.07.2022
+#   This file contains of mips code that prompts
+#   the user for a height and prints a tower of 
+#   the same height. The tower will have the 
+#   letter "A" at the top with the other 
+#   characters being an asterisk.
+
+
     .data
     
 height:         .word 0

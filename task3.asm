@@ -1,3 +1,16 @@
+#   Auuthor: Shyam Kamalesh Borkar
+#   Date: 06.08.2022
+#   This file contains of mips code of a fucntion 
+#   called smash_or_sad which is called by the 
+#   main function. The smash_or_sad function 
+#   has two parameters, a list and hulk_power.
+#   This function, for every item in the list prints
+#   "hulk_smash" on a new line if it is lesser 
+#   than the hulk_power. "hulk_sad" is printed 
+#   otherwise. At the end, a count of how many 
+#   times hulk_smash was printed is printed.
+
+
     .data
 hulk_smash:     .asciiz "Hulk SMASH! >:(\n"
 hulk_sad:       .asciiz "Hulk Sad :(\n" 

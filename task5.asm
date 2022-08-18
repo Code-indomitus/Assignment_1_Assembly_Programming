@@ -1,3 +1,14 @@
+#   Auuthor: Shyam Kamalesh Borkar
+#   Date: 11.08.2022
+#   This file contains of mips code of a function
+#   named print_combiniation and combination_aux.
+#   Function print_combination calls combination_aux
+#   by passing its local variable as one of the 
+#   arguments. The combination_aux function
+#   prints out all the possible combinations of r
+#   numbers using the elements in the arr list.
+
+
     .data
     
 space:       .asciiz " "

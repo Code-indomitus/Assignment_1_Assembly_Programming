@@ -1,3 +1,9 @@
+#   Auuthor: Shyam Kamalesh Borkar
+#   Date: 30.07.2022
+#   This file contains of mips code that uses age
+#   criteria and tier pricing to calculate the total 
+#   amount owed for electrical consumption.
+
     .data
 
 # Pricing data

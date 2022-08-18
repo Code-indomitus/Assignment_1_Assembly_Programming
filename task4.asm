@@ -1,3 +1,14 @@
+#   Auuthor: Shyam Kamalesh Borkar
+#   Date: 07.08.2022
+#   This file contains of mips code of a function
+#   named insertion_sort. This function takes
+#   takes in a list as a parameter and sorts it in
+#   ascending order using the popular insertion
+#   sort algorithm. After the call to 
+#   insertion_sort function is made a for loop is 
+#   used to print out every element in the newly 
+#   sorted array.
+
     .data
     
 space:       .asciiz " "
