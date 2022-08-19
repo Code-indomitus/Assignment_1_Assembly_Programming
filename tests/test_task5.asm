@@ -3,7 +3,7 @@ prompt_len: .asciiz "Array length: "
 prompt_num: .asciiz "Enter num: "
 prompt_r:   .asciiz "Enter r: "
 space:		.asciiz " "
-new_line:		.asciiz "\n"
+newline_str:		.asciiz "\n"
 i:			.word 	0
 
 			.text
