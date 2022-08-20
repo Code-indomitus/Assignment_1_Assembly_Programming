@@ -46,6 +46,13 @@ insertion_sort:
             addi $t0, $0, 0 # j initialised to 0
             sw $t0, -16($fp)
 
+            #  insertion_sort(the_list)
+            #  arg the_list at 8($fp)
+            #  local length at -4($fp)
+            #  local i at -8($fp)
+            #  local key at -12($fp)
+            #  local j at -16($fp)
+
 for_sort:
             lw $t0, -8($fp) # get i into $t0
             lw $t1, -4($fp) # get length into $t1
@@ -135,6 +142,9 @@ main:
             addi $fp, $sp, 0
             # allocate space for one local variables.
             addi $sp, $sp, -4
+
+            #  main()
+            #  local arr at -4($fp)
 
             # allocate space for arr.
             addi $v0, $0, 9

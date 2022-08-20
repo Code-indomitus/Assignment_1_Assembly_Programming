@@ -38,6 +38,12 @@ print_combination:
             # allocate space for one local variable - data
             addi $sp, $sp, -4
 
+            #  print_combination(arr, n, r)
+            #  arg arr at 8($fp)
+            #  arg n at 12($fp)
+            #  arg r at 16($fp)
+            #  local data at -4($fp)
+
             # allocate space for data using r
             lw $t0, 16($fp) # load r
             addi $t0, $t0, 1 # extra size for first element which is the size of data
@@ -120,6 +126,15 @@ combination_aux:
             # allocate space for 1 local (j)
             addi $sp, $sp, -4
             sw $0, 0($sp) # initialise j to 0
+
+            #  combination_aux(arr, n, r, index, data, i)
+            #  arg arr at 8($fp)
+            #  arg n at 12($fp)
+            #  arg r at 16($fp)
+            #  arg index at 20($fp)
+            #  arg data at 24($fp)
+            #  arg i at 28($fp)
+            #  local j at -4($fp)
 
 if1:
             lw $t0, 20($fp) # load index into $t0
@@ -272,6 +287,11 @@ main:
             addi $fp, $sp, 0
             # allocate space for 3 local variables.
             addi $sp, $sp, -12
+
+            #  main()
+            #  local arr at -4($fp)
+            #  local r at -8($fp)
+            #  local n at -12($fp)
 
             # allocate space for arr.
             addi $v0, $0, 9

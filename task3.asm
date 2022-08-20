@@ -44,6 +44,12 @@ smash_or_sad:
             addi $t0, $0, 0 # i = 0
             sw $t0, -8($fp)
 
+            #  smash_or_sad(the_list, hulk_power)
+            #  arg the_list at 8($fp)
+            #  arg hulk_power at 12($fp)
+            #  local smash_count at -4($fp)
+            #  local i at -8($fp)
+
 for: 
             lw $t0, -8($fp)# load i from stack
             lw $t1, 8($fp) # load address of the_list
@@ -102,6 +108,10 @@ main:
             addi $fp, $sp, 0
             # allocate space for two local variables.
             addi $sp, $sp, -8
+
+            #  main()
+            #  local my_list at -4($fp)
+            #  local hulk_power at -8($fp)
 
             # allocate space for my_list.
             addi $v0, $0, 9
